@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RepliesMapper">
+  <resultMap id="BaseResultMap" type="com.model.Replies">
+    <id column="repliesid" jdbcType="INTEGER" property="repliesid" />
+    <result column="noteid" jdbcType="INTEGER" property="noteid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    repliesid, noteid, userid, content, addtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from replies
+    where repliesid = #{repliesid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from replies
+    where repliesid = #{repliesid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.Replies">
+    insert into replies (repliesid, noteid, userid, 
+      content, addtime)
+    values (#{repliesid,jdbcType=INTEGER}, #{noteid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Replies">
+    insert into replies
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="repliesid != null">
+        repliesid,
+      </if>
+      <if test="noteid != null">
+        noteid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      addtime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="repliesid != null">
+        #{repliesid,jdbcType=INTEGER},
+      </if>
+      <if test="noteid != null">
+        #{noteid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Replies">
+    update replies
+    <set>
+      <if test="noteid != null">
+        noteid = #{noteid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where repliesid = #{repliesid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Replies">
+    update replies
+    set noteid = #{noteid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where repliesid = #{repliesid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findRepliesAll" resultMap="BaseResultMap">
+    select r.*,u.username from replies r left join `user` u on r.userid=u.userid
+    where noteid = #{noteid,jdbcType=INTEGER}
+  </select>
+</mapper>

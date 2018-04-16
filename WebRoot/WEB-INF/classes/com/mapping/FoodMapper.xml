@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.FoodMapper">
+  <resultMap id="BaseResultMap" type="com.model.Food">
+    <id column="foodid" jdbcType="INTEGER" property="foodid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    foodid, name, date, imgurl
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from food
+    where foodid = #{foodid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from food
+    where foodid = #{foodid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.Food">
+    insert into food (foodid, name, date
+      )
+    values (#{foodid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Food">
+    insert into food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foodid != null">
+        foodid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="imgurl != null">
+        imgurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foodid != null">
+        #{foodid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Food">
+    update food
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where foodid = #{foodid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Food">
+    update food
+    set name = #{name,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR}
+    where foodid = #{foodid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findFoodAll" resultMap="BaseResultMap">
+    select  * from food
+    where date = #{date,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findFoodDateAll" resultType="java.lang.String">
+    select distinct(date) date from food
+    order by date desc
+  </select>
+</mapper>

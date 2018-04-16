@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.model.News">
+    <id column="newsid" jdbcType="INTEGER" property="newsid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="type" jdbcType="CHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    newsid, title, content, addtime, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where newsid = #{newsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from news
+    where newsid = #{newsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.News">
+    insert into news (newsid, title, content, 
+      addtime, type)
+    values (#{newsid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{type,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.News">
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        newsid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      addtime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsid != null">
+        #{newsid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.News">
+    update news
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+    </set>
+    where newsid = #{newsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.News">
+    update news
+    set title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=CHAR}
+    where newsid = #{newsid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findNewsAll" resultMap="BaseResultMap">
+    select * from news
+    where type = #{type,jdbcType=CHAR}
+  </select>
+</mapper>

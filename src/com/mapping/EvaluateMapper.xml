@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.EvaluateMapper">
+  <resultMap id="BaseResultMap" type="com.model.Evaluate">
+    <id column="evaluateid" jdbcType="INTEGER" property="evaluateid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    evaluateid, userid, content, addtime, date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from evaluate
+    where evaluateid = #{evaluateid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from evaluate
+    where evaluateid = #{evaluateid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.Evaluate">
+    insert into evaluate (evaluateid, userid, content, 
+      addtime, date)
+    values (#{evaluateid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{date,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Evaluate">
+    insert into evaluate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="evaluateid != null">
+        evaluateid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      addtime
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="evaluateid != null">
+        #{evaluateid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Evaluate">
+    update evaluate
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where evaluateid = #{evaluateid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Evaluate">
+    update evaluate
+    set userid = #{userid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      date = #{date,jdbcType=VARCHAR}
+    where evaluateid = #{evaluateid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findEvaluateAll" resultMap="BaseResultMap">
+    select e.*,u.username from evaluate e left join `user` u on e.userid=u.userid
+    where 1=1 
+    <if test="date!=null">
+    	and date = #{date,jdbcType=VARCHAR}
+    </if>
+    <if test="userid!=null">
+    	and e.userid = #{userid,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>
