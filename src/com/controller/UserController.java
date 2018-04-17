@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleIfStatement.Else;
 import com.model.User;
 import com.service.UserService;
 import com.util.DateUtil;
@@ -65,13 +66,15 @@ public class UserController {
 			user = userService.findSingleUser(userId);
 		}
 		request.setAttribute("user", user);
-		
+		/*
 		String roler = (String)request.getSession().getAttribute("roler");
 		if(!"0".equals(roler)){
 			return "/userInfo";
 		}else{
 			return "/user_addOrEdit";	
 		}
+		*/
+		return "/user_addOrEdit";	
 	}
 
 	@RequestMapping("/addOrUpdateUser")
@@ -83,11 +86,14 @@ public class UserController {
 		}
 		String roler = (String)request.getSession().getAttribute("roler");
 		if("1".equals(roler)){
-			return "redirect:/user/beforeAddOrUpdateUser?userId="+user.getUserid();	
+			return "redirect:/note/blogList";
+			//return "redirect:/user/beforeAddOrUpdateUser?userId="+user.getUserid();	
 		}else{
 			return "redirect:/user/findUserAll";
 		}
 	}
+
+	
 	
 	@RequestMapping("/regist")
 	public String regist(User user, HttpServletRequest request) {
@@ -100,5 +106,26 @@ public class UserController {
 		userService.deleteUser(userId);
 		return "redirect:/user/findUserAll";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

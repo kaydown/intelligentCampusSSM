@@ -63,6 +63,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li class="divider"></li>
+							<li><a href="<%=basePath%>user/beforeAddOrUpdateUser?userId=${obj.userid}">修改个人信息</a></li>
 							<li><a href="<%=basePath%>user/logout">注销</a></li>
 						</ul>
 					</li>

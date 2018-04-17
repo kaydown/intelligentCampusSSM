@@ -39,7 +39,7 @@
 <link rel="stylesheet" type="text/css" href="<%=basePath%>pageCss/js/jquery.datatables/bootstrap-adapter/css/datatables.css" />
 <link href="<%=basePath%>pageCss/css/style.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="<%=basePath%>pageCss/js/jquery.niftymodals/css/component.css" />
-  <link rel="stylesheet" type="text/css" href="<%=basePath%>pageCss/js/jquery.timeline/css/component.css" />
+<link rel="stylesheet" type="text/css" href="<%=basePath%>pageCss/js/jquery.timeline/css/component.css" />
 
 </head>
 
@@ -62,6 +62,7 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li class="divider"></li>
+							<li><a href="<%=basePath%>user/beforeAddOrUpdateUser?userId=${uid}">修改个人信息</a></li>
 							<li><a href="<%=basePath%>user/logout">注销</a></li>
 						</ul>
 					</li>
@@ -108,7 +109,7 @@
 				          <time class="cbp_tmtime" datetime="${obj.datetime }"><span>${obj.date }</span> <span>${obj.time }</span></time>
 				          <div class="cbp_tmicon cbp_tmicon-phone"></div>
 				          <div class="cbp_tmlabel">
-				            <h2>发布人：${obj.username }</h2>
+				            <h2 title="个人简介：${obj.ucontent }">发布人：${obj.username }</h2>
 				            <p>${obj.content }</p>
 				            <p>
 				            	<a href="<%=basePath%>replies/findBoagRepliesList?noteid=${obj.noteid }" style="color: black;">查看评论</a>

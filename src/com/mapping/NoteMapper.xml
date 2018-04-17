@@ -75,6 +75,6 @@
   </update>
   
   <select id="findNoteAll" resultMap="BaseResultMap">
-    select n.*,u.username from note n left join `user` u on n.userid=u.userid
+    select n.*,u.username,u.content as 'ucontent' from note n left join `user` u on n.userid=u.userid
   </select>
 </mapper>

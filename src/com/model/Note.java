@@ -18,6 +18,8 @@ public class Note {
 	private String date;
 	
 	private String time;
+	
+	private String ucontent;
 
 	public Integer getNoteid() {
 		return noteid;
@@ -81,6 +83,14 @@ public class Note {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+	
+	public String getUcontent() {
+		return ucontent;
+	}
+	
+	public void setUcontent(String ucontent) {
+		this.ucontent = ucontent;
 	}
 
 }
